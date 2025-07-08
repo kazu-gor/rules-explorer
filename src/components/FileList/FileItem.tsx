@@ -26,6 +26,8 @@ export const FileItem = React.memo(function FileItem({
         return { color: 'green' as const, label: 'COMMAND' };
       case 'global-md':
         return { color: 'magenta' as const, label: 'GLOBAL' };
+      case 'cursor-rule':
+        return { color: 'cyan' as const, label: 'CURSOR' };
       default:
         return { color: 'gray' as const, label: 'FILE' };
     }
@@ -42,6 +44,8 @@ export const FileItem = React.memo(function FileItem({
         return '⚡';
       case 'global-md':
         return '🌐';
+      case 'cursor-rule':
+        return '🎯';
       default:
         return '📄';
     }
@@ -59,7 +63,9 @@ export const FileItem = React.memo(function FileItem({
       ? `~/.claude/${fileName}`
       : file.type === 'slash-command'
         ? fileName.replace('.md', '') // Remove .md for commands
-        : `${parentDir}/${fileName}`;
+        : file.type === 'cursor-rule'
+          ? fileName.replace('.md', '') // Remove .md for cursor rules
+          : `${parentDir}/${fileName}`;
 
   const prefix = isFocused ? '► ' : '  ';
 

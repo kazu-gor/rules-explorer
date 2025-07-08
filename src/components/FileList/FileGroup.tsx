@@ -19,6 +19,8 @@ const getGroupLabel = (type: ClaudeFileType): string => {
       return 'COMMAND';
     case 'global-md':
       return 'GLOBAL';
+    case 'cursor-rule':
+      return 'CURSOR';
     default:
       return 'OTHER';
   }
@@ -34,6 +36,8 @@ const getGroupColor = (type: ClaudeFileType): string => {
       return 'green';
     case 'global-md':
       return 'magenta';
+    case 'cursor-rule':
+      return 'cyan';
     default:
       return 'gray';
   }
@@ -108,6 +112,19 @@ if (import.meta.vitest != null) {
 
       // Selected groups should have different styling
       expect(lastFrame()).toContain('▼ COMMAND (10)');
+    });
+
+    test('should render cursor-rule group correctly', () => {
+      const { lastFrame } = render(
+        <FileGroup
+          type="cursor-rule"
+          fileCount={2}
+          isExpanded={true}
+          isSelected={false}
+        />,
+      );
+
+      expect(lastFrame()).toContain('▼ CURSOR (2)');
     });
   });
 }

@@ -16,7 +16,7 @@ import {
   extractTagsFromContent,
   validateClaudeMdContent,
 } from './_utils.ts';
-import { findClaudeFiles } from './fast-scanner.ts';
+import { findClaudeFiles, findCursorRules } from './fast-scanner.ts';
 
 export const scanClaudeFiles = async (
   options: ScanOptions = {},
@@ -35,6 +35,14 @@ export const scanClaudeFiles = async (
       includeHidden,
     });
 
+    // Scan cursor rules
+    const cursorFiles = await findCursorRules({
+      path,
+      recursive,
+      includeHidden,
+    });
+    files.push(...cursorFiles);
+
     // Also scan global Claude directory if scanning recursively
     if (recursive) {
       const { homedir } = await import('node:os');
@@ -48,6 +56,13 @@ export const scanClaudeFiles = async (
           includeHidden,
         });
         files.push(...globalFiles);
+
+        const globalCursorFiles = await findCursorRules({
+          path: globalPath,
+          recursive: true,
+          includeHidden,
+        });
+        files.push(...globalCursorFiles);
       }
     }
 
@@ -100,6 +115,10 @@ const getSearchPatterns = (
 
   if (!type || type === 'slash-command') {
     patterns.push(`${prefix}.claude/commands/**/*.md`);
+  }
+
+  if (!type || type === 'cursor-rule') {
+    patterns.push(`${prefix}.cursor/rules/**/*.md`);
   }
 
   return patterns;

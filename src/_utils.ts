@@ -52,6 +52,13 @@ export const detectClaudeFileType = (filePath: string): ClaudeFileType => {
       ],
       () => 'slash-command' as const,
     )
+    .with(
+      [
+        P.when((name) => name.endsWith('.md')),
+        P.when((dir) => dir.includes('.cursor/rules')),
+      ],
+      () => 'cursor-rule' as const,
+    )
     .otherwise(() => 'unknown' as const);
 };
 
@@ -246,6 +253,12 @@ if (import.meta.vitest != null) {
       expect(detectClaudeFileType('/project/.claude/commands/deploy.md')).toBe(
         'slash-command',
       );
+    });
+
+    test('should detect cursor rule files', () => {
+      expect(
+        detectClaudeFileType('/project/.cursor/rules/coding-style.md'),
+      ).toBe('cursor-rule');
     });
   });
 

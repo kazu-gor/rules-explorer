@@ -105,6 +105,57 @@ export const findSlashCommands = async (
 };
 
 /**
+ * Find cursor rule files using fdir
+ */
+export const findCursorRules = async (
+  options: ScanOptions = {},
+): Promise<string[]> => {
+  const {
+    path = process.cwd(),
+    recursive = true,
+    includeHidden = false,
+  } = options;
+
+  let crawler = new fdir()
+    .withFullPaths()
+    .exclude((dirName) => {
+      // Use comprehensive exclusion patterns for security and performance
+      if ((DEFAULT_EXCLUSIONS as readonly string[]).includes(dirName)) {
+        return true;
+      }
+
+      // Handle hidden files
+      if (!includeHidden && dirName.startsWith('.') && dirName !== '.cursor') {
+        return true;
+      }
+
+      return false;
+    })
+    .filter((filePath) => {
+      // Look for files in .cursor/rules directories
+      return (
+        filePath.includes('/.cursor/rules/') &&
+        (filePath.endsWith('.md') || filePath.endsWith('.mdc'))
+      );
+    });
+
+  // Limit depth for performance
+  if (!recursive) {
+    crawler = crawler.withMaxDepth(3); // Rules are usually nested
+  } else {
+    crawler = crawler.withMaxDepth(20);
+  }
+
+  try {
+    const files = await crawler.crawl(path).withPromise();
+    return files;
+  } catch (error) {
+    console.warn(`Failed to scan cursor rules in ${path}:`, error);
+    return [];
+  }
+};
+
+/**
  * Check if fdir is available (always true since it's a dependency)
  * Internal function for testing only
  */
@@ -178,6 +229,16 @@ if (import.meta.vitest != null) {
 
       expect(Array.isArray(commands)).toBe(true);
       // Commands array might be empty if no .claude/commands exist
+    });
+
+    test('should find cursor rule files', async () => {
+      const rules = await findCursorRules({
+        path: process.cwd(),
+        recursive: true,
+      });
+
+      expect(Array.isArray(rules)).toBe(true);
+      // Rules array might be empty if no .cursor/rules exist
     });
 
     test('should handle non-existent paths gracefully', async () => {

@@ -31,6 +31,7 @@ export type ClaudeFileType =
   | 'claude-local-md'
   | 'global-md'
   | 'slash-command'
+  | 'cursor-rule'
   | 'unknown';
 
 export type ProjectInfo = {
@@ -123,6 +124,7 @@ const ScanOptionsSchema = z.object({
       'claude-local-md',
       'global-md',
       'slash-command',
+      'cursor-rule',
       'unknown',
     ])
     .optional(),

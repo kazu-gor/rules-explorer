@@ -1,5 +1,11 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignore": ["dist/**", ".git/**"],
-  "ignoreDependencies": ["es-toolkit", "path-type", "type-fest", "xdg-basedir"]
+  "ignoreDependencies": [
+    "es-toolkit",
+    "path-type",
+    "type-fest",
+    "xdg-basedir",
+    "lefthook"
+  ]
 }
