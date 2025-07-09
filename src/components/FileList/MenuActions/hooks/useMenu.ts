@@ -32,6 +32,15 @@ export const useMenu = ({ file, onClose }: UseMenuProps) => {
     }
   }, []);
 
+  const deleteFile = useCallback(async (path: string): Promise<void> => {
+    try {
+      const fs = await import('node:fs/promises');
+      await fs.unlink(path);
+    } catch (error) {
+      throw new Error(`Failed to delete file: ${error}`);
+    }
+  }, []);
+
   const actions: MenuAction[] = useMemo(
     () => [
       {
@@ -83,8 +92,18 @@ export const useMenu = ({ file, onClose }: UseMenuProps) => {
           return '✅ File opened';
         },
       },
+      {
+        key: 'x',
+        label: 'Delete File',
+        description: 'Delete file permanently',
+        action: async () => {
+          await deleteFile(file.path);
+          onClose();
+          return '✅ File deleted';
+        },
+      },
     ],
-    [file.path, copyToClipboard, openFile],
+    [file.path, copyToClipboard, openFile, deleteFile, onClose],
   );
 
   const executeAction = useCallback(

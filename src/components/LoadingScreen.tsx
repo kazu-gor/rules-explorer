@@ -27,7 +27,7 @@ export function LoadingScreen(): React.JSX.Element {
       >
         <Box flexDirection="column" alignItems="center">
           <Gradient colors={['#ff9966', '#ff5e62']}>
-            <BigText text="CLAUDE CODE" font="block" />
+            <BigText text="AI RULES" font="block" />
           </Gradient>
           <Gradient colors={['#ff9966', '#ff5e62']}>
             <BigText text="EXPLORER" font="block" />
@@ -47,7 +47,7 @@ export function LoadingScreen(): React.JSX.Element {
       justifyContent="center"
       alignItems="center"
     >
-      <Spinner label="Scanning Claude files..." />
+      <Spinner label="Scanning AI Rules files..." />
       <Text dimColor>Please wait...</Text>
     </Box>
   );

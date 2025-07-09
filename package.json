@@ -1,8 +1,8 @@
 {
-  "name": "claude-explorer",
+  "name": "ai-rules-explorer",
   "type": "module",
   "version": "1.0.0",
-  "description": "CLI tool for exploring and managing Claude Code settings and slash commands",
+  "description": "CLI tool for exploring and managing AI Rules settings and slash commands",
   "author": "nyatinte <takumi.062757@gmail.com>",
   "license": "MIT",
   "repository": {
