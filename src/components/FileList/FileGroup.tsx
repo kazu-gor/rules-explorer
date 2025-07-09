@@ -16,7 +16,7 @@ const getGroupLabel = (type: ClaudeFileType): string => {
     .with('claude-local-md', () => 'LOCAL')
     .with('slash-command', () => 'COMMAND')
     .with('global-md', () => 'GLOBAL')
-    .with('cursor-rule', () => 'OTHER')
+    .with('cursor-rule', () => 'CURSOR')
     .with('unknown', () => 'OTHER')
     .exhaustive();
 };
