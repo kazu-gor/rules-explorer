@@ -1,14 +1,27 @@
-# Claude Explorer
+# Claude Code Explorer
 
 <div align="center">
-  <img src="assets/icon.svg" alt="Claude Explorer Icon" width="128" height="128">
+  <img src="assets/icon.svg" alt="Claude Code Explorer Icon" width="128" height="128">
   <br><br>
   <strong>Interactive CLI tool for exploring and managing Claude Code settings and slash commands</strong>
+  <br><br>
+  <a href="https://www.npmjs.com/package/claude-code-explorer">
+    <img src="https://img.shields.io/npm/v/claude-code-explorer.svg" alt="npm version">
+  </a>
+  <a href="https://www.npmjs.com/package/claude-code-explorer">
+    <img src="https://img.shields.io/npm/dm/claude-code-explorer.svg" alt="npm downloads">
+  </a>
+  <a href="https://github.com/nyante/claude-code-explorer/blob/main/LICENSE">
+    <img src="https://img.shields.io/npm/l/claude-code-explorer.svg" alt="license">
+  </a>
+  <a href="https://github.com/nyante/claude-code-explorer">
+    <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg" alt="node version">
+  </a>
 </div>
 
 ## Overview
 
-**Claude Explorer** is a React Ink-based CLI tool that provides an interactive terminal interface for discovering, previewing, and managing Claude Code configuration files and slash commands. Navigate through your codebase to find CLAUDE.md files, slash command definitions, and other Claude-related configurations with a beautiful terminal UI.
+**Claude Code Explorer** is a React Ink-based CLI tool that provides an interactive terminal interface for discovering, previewing, and managing Claude Code configuration files and slash commands. Navigate through your codebase to find CLAUDE.md files, slash command definitions, and other Claude-related configurations with a beautiful terminal UI.
 
 ## Features
 
@@ -20,9 +33,17 @@
 - 🎨 **Terminal UI** - Beautiful React Ink interface with proper focus management
 - 📝 **Markdown Preview** - Renders CLAUDE.md files with syntax highlighting
 
+## Screenshots
+
+<div align="center">
+  <img src="assets/thumbnail.png" alt="Claude Code Explorer Thumbnail" width="600">
+  <br><br>
+  <img src="assets/screenshot.png" alt="Claude Code Explorer Screenshot" width="800">
+</div>
+
 ## Target Files
 
-Claude Explorer automatically discovers these configuration files:
+Claude Code Explorer automatically discovers these configuration files:
 
 - **CLAUDE.md** → Project-level configuration (most common)
 - **CLAUDE.local.md** → Local overrides (gitignored)
@@ -31,21 +52,41 @@ Claude Explorer automatically discovers these configuration files:
 
 ## Installation
 
-### Recommended: Direct execution
+### Quick Start (Recommended)
+
+No installation required! Run directly with:
 
 ```bash
-# Run without installing
-bunx claude-explorer
-# or
-npx claude-explorer
+# Using Bun (fastest)
+bunx claude-code-explorer
+
+# Using npm
+npx claude-code-explorer
+
+# Using pnpm
+pnpm dlx claude-code-explorer
 ```
 
-### Optional: Global installation
+### Global Installation
+
+For frequent use, install globally:
 
 ```bash
-npm install -g claude-explorer
-# Then run anywhere
-claude-explorer
+# npm
+npm install -g claude-code-explorer
+
+# Bun
+bun install -g claude-code-explorer
+
+
+# pnpm
+pnpm add -g claude-code-explorer
+```
+
+Then run from anywhere:
+
+```bash
+claude-code-explorer
 ```
 
 ## Usage
@@ -53,32 +94,49 @@ claude-explorer
 ### Interactive Mode (Default)
 
 ```bash
-claude-explorer                    # Launch interactive TUI
-claude-explorer --path ~/projects # Scan specific directory
+claude-code-explorer                    # Launch interactive TUI
+claude-code-explorer --path ~/projects # Scan specific directory
 ```
 
 ### Command Line Options
 
 ```bash
-claude-explorer --help             # Show help information
-claude-explorer --version          # Show version number
-claude-explorer --path <path>      # Specify directory to scan
+claude-code-explorer --help             # Show help information
+claude-code-explorer --version          # Show version number
+claude-code-explorer --path <path>      # Specify directory to scan
 ```
 
 ### Examples
 
 ```bash
-# Interactive exploration of current directory
-claude-explorer
+# Launch in current directory
+bunx claude-code-explorer
 
-# Scan specific project directory
-claude-explorer --path /path/to/project
+# Scan specific project
+bunx claude-code-explorer --path ~/my-project
+
+# Quick exploration without installation
+npx claude-code-explorer
 
 # Show help
-claude-explorer --help
+bunx claude-code-explorer --help
 
 # Show version
-claude-explorer --version
+bunx claude-code-explorer --version
+```
+
+### Common Use Cases
+
+```bash
+# Find all Claude configuration in your workspace
+cd ~/workspace
+bunx claude-code-explorer
+
+# Check Claude settings in a specific project
+bunx claude-code-explorer --path ./my-project
+
+# Explore global Claude configuration
+bunx claude-code-explorer --path ~/.claude
 ```
 
 ### Development Mode
@@ -119,11 +177,11 @@ bun run build      # Build for production
 
 ### CLI Reference
 
-| Option             | Short | Description                              | Default           |
-| ------------------ | ----- | ---------------------------------------- | ----------------- |
-| `--help`           | `-h`  | Show help information                    | -                 |
-| `--version`        | `-V`  | Show version number                      | -                 |
-| `--path`           | `-p`  | Directory to scan                        | Current directory |
+| Option      | Short | Description           | Default           |
+| ----------- | ----- | --------------------- | ----------------- |
+| `--help`    | `-h`  | Show help information | -                 |
+| `--version` | `-V`  | Show version number   | -                 |
+| `--path`    | `-p`  | Directory to scan     | Current directory |
 
 ### Development Commands
 

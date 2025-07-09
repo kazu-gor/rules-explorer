@@ -10,6 +10,13 @@ import { FileGroup as FileGroupComponent } from './FileGroup.js';
 import { FileItem } from './FileItem.js';
 import { MenuActions } from './MenuActions/index.js';
 
+/**
+ * Why not use @inkjs/ui TextInput:
+ * - TextInput takes exclusive focus, blocking arrow key navigation
+ * - Requires explicit mode switching (enter/exit search mode)
+ * - Our implementation allows instant "type to search" while navigating
+ */
+
 type FileListProps = {
   readonly files: ClaudeFileInfo[];
   readonly fileGroups: FileGroup[];
@@ -105,6 +112,11 @@ const FileList = React.memo(function FileList({
     (input, key) => {
       if (isMenuMode) return;
 
+      // Debug: Log key events
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Key event:', { input, key, searchQuery });
+      }
+
       // Handle special keys
       if (key.escape) {
         if (searchQuery) {
@@ -118,10 +130,24 @@ const FileList = React.memo(function FileList({
         return;
       }
 
-      // Clear search on backspace when empty
-      if (key.backspace && searchQuery) {
+      // Clear search on backspace or delete
+      if ((key.backspace || key.delete) && searchQuery) {
         setSearchQuery(searchQuery.slice(0, -1));
         onSearchQueryChange?.(searchQuery.slice(0, -1));
+        return;
+      }
+
+      // Ctrl+H as alternative backspace (common in terminal apps)
+      if (key.ctrl && input === 'h' && searchQuery) {
+        setSearchQuery(searchQuery.slice(0, -1));
+        onSearchQueryChange?.(searchQuery.slice(0, -1));
+        return;
+      }
+
+      // Ctrl+U to clear entire search query
+      if (key.ctrl && input === 'u' && searchQuery) {
+        setSearchQuery('');
+        onSearchQueryChange?.('');
         return;
       }
 
@@ -282,7 +308,8 @@ const FileList = React.memo(function FileList({
       {/* Footer - always visible */}
       <Box marginTop={1} borderStyle="single" borderTop={true}>
         <Text dimColor>
-          ↑↓: Navigate | Enter/Space: Select | Esc: Clear/Exit | Type to search
+          ↑↓: Navigate | Enter/Space: Select | Esc: Clear/Exit |
+          Backspace/Delete: Remove char | Ctrl+U: Clear search
         </Text>
       </Box>
     </Box>
