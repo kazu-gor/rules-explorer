@@ -275,7 +275,7 @@ if (import.meta.vitest) {
 
       const output = lastFrame();
       // Should show no files found message
-      expect(output).toContain('No Claude files found');
+      expect(output).toContain('No AI Rules files found');
 
       unmount();
     });

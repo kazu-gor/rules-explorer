@@ -18,7 +18,7 @@ describe('LoadingScreen', () => {
     rerender(<LoadingScreen />);
 
     const output = lastFrame();
-    expect(output).toContain('Scanning Claude files...');
+    expect(output).toContain('Scanning AI Rules files...');
 
     vi.useRealTimers();
   });

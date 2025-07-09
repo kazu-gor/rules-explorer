@@ -29,6 +29,7 @@ if (import.meta.vitest) {
         'claude-local-md': 'LOCAL',
         'slash-command': 'COMMAND',
         'global-md': 'GLOBAL',
+        'cursor-rule': 'CURSOR',
         unknown: 'OTHER',
       };
 

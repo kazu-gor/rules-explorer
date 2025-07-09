@@ -49,9 +49,9 @@ export function App({ cliOptions }: AppProps): React.JSX.Element {
         alignItems="center"
       >
         <Text bold color="yellow">
-          No Claude files found
+          No AI Rules files found
         </Text>
-        <Text dimColor>Create a CLAUDE.md file to get started</Text>
+        <Text dimColor>Create an AI-RULES.md file to get started</Text>
         <Text dimColor>Press Ctrl+C to exit</Text>
       </Box>
     );
@@ -64,7 +64,7 @@ export function App({ cliOptions }: AppProps): React.JSX.Element {
         {/* Header */}
         <Box paddingX={1} paddingY={0} borderStyle="single" borderBottom={true}>
           <Text bold color="blue">
-            Claude Code Explorer
+            AI Rules Explorer
           </Text>
           <Text dimColor> | Interactive File Browser</Text>
         </Box>

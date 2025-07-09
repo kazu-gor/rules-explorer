@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 // Simple type alias
 export type ClaudeFilePath = string;
 
@@ -15,6 +17,7 @@ export type ClaudeFileType =
   | 'claude-local-md'
   | 'global-md'
   | 'slash-command'
+  | 'cursor-rule'
   | 'unknown';
 
 export type ProjectInfo = {
@@ -67,8 +70,6 @@ export type FileGroup = {
   readonly isExpanded: boolean;
 };
 
-// Output formats
-
 // CLI argument types
 export type CliOptions = {
   readonly help?: boolean | undefined;
@@ -76,7 +77,24 @@ export type CliOptions = {
   readonly path?: string | undefined;
 };
 
-// CLI command context types
+// Zod schemas for validation
+const _ScanOptionsSchema = z.object({
+  path: z.string().optional(),
+  recursive: z.boolean().optional(),
+  type: z
+    .enum([
+      'claude-md',
+      'claude-local-md',
+      'global-md',
+      'slash-command',
+      'cursor-rule',
+      'unknown',
+    ])
+    .optional(),
+  includeHidden: z.boolean().optional(),
+});
+
+const _OutputFormatSchema = z.enum(['table', 'json']);
 
 // InSource tests
 if (import.meta.vitest != null) {

@@ -16,6 +16,7 @@ const getGroupLabel = (type: ClaudeFileType): string => {
     .with('claude-local-md', () => 'LOCAL')
     .with('slash-command', () => 'COMMAND')
     .with('global-md', () => 'GLOBAL')
+    .with('cursor-rule', () => 'CURSOR')
     .with('unknown', () => 'OTHER')
     .exhaustive();
 };
@@ -26,6 +27,7 @@ const getGroupColor = (type: ClaudeFileType): string => {
     .with('claude-local-md', () => 'yellow')
     .with('slash-command', () => 'green')
     .with('global-md', () => 'magenta')
+    .with('cursor-rule', () => 'gray')
     .with('unknown', () => 'gray')
     .exhaustive();
 };
@@ -99,6 +101,19 @@ if (import.meta.vitest != null) {
 
       // Selected groups should have different styling
       expect(lastFrame()).toContain('▼ COMMAND (10)');
+    });
+
+    test('should render cursor-rule group correctly', () => {
+      const { lastFrame } = render(
+        <FileGroup
+          type="cursor-rule"
+          fileCount={2}
+          isExpanded={true}
+          isSelected={false}
+        />,
+      );
+
+      expect(lastFrame()).toContain('▼ CURSOR (2)');
     });
   });
 }

@@ -16,9 +16,9 @@ const packageJson = JSON.parse(
 
 // CLI configuration
 program
-  .name('claude-code-explorer')
+  .name('ai-rules-explorer')
   .description(
-    'Interactive CLI tool for exploring Claude Code settings and slash commands',
+    'Interactive CLI tool for exploring AI Rules settings and slash commands',
   )
   .version(packageJson.version)
   .option('-p, --path <path>', 'specify directory to scan', process.cwd())
