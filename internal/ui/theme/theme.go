@@ -30,7 +30,7 @@ func (t *DefaultTheme) GetIcons() types.IconSet {
 	return types.IconSet{
 		CursorRule:   "📋",
 		ClaudeConfig: "📝",
-		ConfigFile:   "⚙️",
+		ConfigFile:   "📒",
 		Search:       "🔍",
 		File:         "📄",
 		Folder:       "📁",

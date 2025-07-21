@@ -133,7 +133,7 @@ func (a *App) setupHelpPanel() {
 [yellow]File Types:[-]
 [red]📋[-] Cursor Rules (.mdc)
 [green]📝[-] Claude Config (CLAUDE.md)
-[blue]⚙️[-]  Config (.claude/*)`
+[blue]📒[-]  Config (.claude/*)`
 	a.helpPanel.SetText(helpText)
 }
 
@@ -247,7 +247,7 @@ func (a *App) getFileIcon(path string) string {
 		return "[green]📝[-]"
 	}
 	if strings.HasPrefix(path, ".claude/") {
-		return "[blue]⚙️[-]"
+		return "[blue]📒[-]"
 	}
 	return "[white]📄[-]"
 }
@@ -352,7 +352,7 @@ func (a *App) updateFileStats() {
 [yellow]By Type:[-]
 [red]📋[-] Cursor Rules: %d
 [green]📝[-] Claude Configs: %d
-[blue]⚙️[-] Config Files: %d
+[blue]📒[-] Config Files: %d
 
 [yellow]Timestamp:[-]
 %s`,
