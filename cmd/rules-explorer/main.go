@@ -3,17 +3,17 @@ package main
 import (
 	"log"
 
-	"rules-explorer/internal/ui"
+	"rules-explorer/internal/app"
 )
 
 func main() {
-	app := ui.NewApp()
+	application := app.New()
 	
-	if err := app.Initialize(); err != nil {
+	if err := application.Initialize(); err != nil {
 		log.Fatalf("Failed to initialize app: %v", err)
 	}
 	
-	if err := app.Run(); err != nil {
+	if err := application.Run(); err != nil {
 		log.Fatalf("App failed: %v", err)
 	}
 }

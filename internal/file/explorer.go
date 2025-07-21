@@ -5,25 +5,24 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"rules-explorer/internal/core/types"
+	"rules-explorer/internal/core/search"
 )
 
-type Item struct {
-	Path    string
-	Content string
-}
-
 type Explorer struct {
-	allFiles []Item
+	allFiles []types.FileItem
+	filter   *search.Filter
 }
 
 func NewExplorer() *Explorer {
 	return &Explorer{
-		allFiles: []Item{},
+		allFiles: make([]types.FileItem, 0),
+		filter:   search.NewFilter(),
 	}
 }
 
 func (e *Explorer) LoadFiles() error {
-	e.allFiles = []Item{}
+	e.allFiles = make([]types.FileItem, 0)
 	cwd, err := os.Getwd()
 	if err != nil {
 		return err
@@ -43,31 +42,13 @@ func (e *Explorer) LoadFiles() error {
 			return nil
 		}
 
-		// Check if file matches our patterns
-		matched := false
-		
-		// Match .cursor/rules/*.mdc
-		if strings.HasPrefix(relPath, ".cursor/rules/") && strings.HasSuffix(relPath, ".mdc") {
-			matched = true
-		}
-		
-		// Match CLAUDE.md anywhere
-		if filepath.Base(relPath) == "CLAUDE.md" {
-			matched = true
-		}
-		
-		// Match .claude/* (direct children only)
-		if strings.HasPrefix(relPath, ".claude/") && !strings.Contains(relPath[8:], "/") {
-			matched = true
-		}
-
-		if matched {
+		if e.matchesPattern(relPath) {
 			content, err := os.ReadFile(path)
 			if err != nil {
 				content = []byte(fmt.Sprintf("Error reading file: %v", err))
 			}
 
-			e.allFiles = append(e.allFiles, Item{
+			e.allFiles = append(e.allFiles, types.FileItem{
 				Path:    relPath,
 				Content: string(content),
 			})
@@ -79,24 +60,30 @@ func (e *Explorer) LoadFiles() error {
 	return err
 }
 
-func (e *Explorer) FilterFiles(filter string) []Item {
-	if filter == "" {
-		return e.allFiles
+func (e *Explorer) matchesPattern(relPath string) bool {
+	// Match .cursor/rules/*.mdc
+	if strings.HasPrefix(relPath, ".cursor/rules/") && strings.HasSuffix(relPath, ".mdc") {
+		return true
+	}
+	
+	// Match CLAUDE.md anywhere
+	if filepath.Base(relPath) == "CLAUDE.md" {
+		return true
+	}
+	
+	// Match .claude/* (direct children only)
+	if strings.HasPrefix(relPath, ".claude/") && !strings.Contains(relPath[8:], "/") {
+		return true
 	}
 
-	filtered := []Item{}
-	lowerFilter := strings.ToLower(filter)
-	
-	for _, file := range e.allFiles {
-		if strings.Contains(strings.ToLower(file.Path), lowerFilter) ||
-			strings.Contains(strings.ToLower(file.Content), lowerFilter) {
-			filtered = append(filtered, file)
-		}
-	}
-	
-	return filtered
+	return false
 }
 
-func (e *Explorer) GetAllFiles() []Item {
+func (e *Explorer) FilterFiles(filter string) []types.FileItem {
+	e.filter.SetQuery(filter)
+	return e.filter.FilterFiles(e.allFiles)
+}
+
+func (e *Explorer) GetAllFiles() []types.FileItem {
 	return e.allFiles
 }
