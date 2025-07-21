@@ -25,7 +25,7 @@ Rules Explorer automatically discovers and indexes:
 
 ### Prerequisites
 
-- Go 1.21 or later
+- Go 1.24.4 or later
 
 ### Build from Source
 
