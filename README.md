@@ -23,13 +23,13 @@ Rules Explorer automatically discovers and indexes:
 
 ### Prerequisites
 
-- Go 1.24.4 or later
+- Go 1.21 or later
 
 ### Build from Source
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/your-username/rules-explorer.git
 cd rules-explorer
 
 # Build the application
@@ -58,6 +58,7 @@ go run ./cmd/rules-explorer
 | `Tab` | Switch focus between search and file list |
 | `↑` / `↓` | Navigate file list |
 | `Ctrl+P` / `Ctrl+N` | Alternative navigation (vim-style) |
+| `Enter` | Open selected file in preview |
 | `Ctrl+C` / `Escape` | Exit application |
 
 ### Workflow
@@ -76,7 +77,9 @@ rules-explorer/
 ├── internal/
 │   ├── ui/                       # UI components and application logic
 │   │   ├── app.go               # Main application struct and setup
-│   │   └── keybinds.go          # Keyboard handling
+│   │   ├── keybinds.go          # Keyboard handling
+│   │   └── theme/               # UI theming system
+│   │       └── theme.go         # Color schemes and styling
 │   └── file/                     # File operations
 │       └── explorer.go          # File discovery and filtering
 ├── go.mod
@@ -142,7 +145,7 @@ go build -ldflags="-s -w" -o rules-explorer ./cmd/rules-explorer
 
 ## Requirements
 
-- **Go**: 1.24.4 or later
+- **Go**: 1.21 or later
 - **Terminal**: Any terminal with basic color support
 - **OS**: macOS, Linux, or Windows
 
