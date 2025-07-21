@@ -2,6 +2,8 @@ package app
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 	"rules-explorer/internal/core/types"
@@ -105,6 +107,8 @@ func (a *App) handleEvent(event types.Event) {
 		a.handleRefresh()
 	case types.EventQuit:
 		a.tvApp.Stop()
+	case types.EventEditFile:
+		a.handleEditFile()
 	}
 }
 
@@ -158,6 +162,39 @@ func (a *App) handleRefresh() {
 	a.filteredFiles = a.explorer.FilterFiles(searchQuery)
 	
 	a.updateAllComponents()
+}
+
+func (a *App) handleEditFile() {
+	if a.currentFile == nil {
+		return
+	}
+	
+	// Get editor from environment
+	editor := os.Getenv("EDITOR")
+	if editor == "" {
+		// Default to common editors
+		if _, err := exec.LookPath("vi"); err == nil {
+			editor = "vi"
+		} else if _, err := exec.LookPath("nano"); err == nil {
+			editor = "nano"
+		} else {
+			return
+		}
+	}
+	
+	// Suspend the tview application temporarily
+	a.tvApp.Suspend(func() {
+		// Open editor
+		cmd := exec.Command(editor, a.currentFile.Path)
+		cmd.Stdin = os.Stdin
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		
+		if err := cmd.Run(); err == nil {
+			// Refresh after editing
+			a.handleRefresh()
+		}
+	})
 }
 
 func (a *App) updateAllComponents() {

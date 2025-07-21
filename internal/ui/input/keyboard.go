@@ -33,8 +33,29 @@ func (k *KeyboardHandler) RegisterComponent(focus types.Focus, component types.C
 func (k *KeyboardHandler) HandleGlobalKeys(event *tcell.EventKey) *tcell.EventKey {
 	switch event.Key() {
 	case tcell.KeyTab:
-		k.switchFocus()
+		k.switchFocus(true)
 		return nil
+	case tcell.KeyBacktab:
+		k.switchFocus(false)
+		return nil
+	case tcell.KeyRune:
+		switch event.Rune() {
+		case 'l':
+			k.switchFocus(true)
+			return nil
+		case 'h':
+			k.switchFocus(false)
+			return nil
+		case 'q':
+			if k.eventHandler != nil {
+				k.eventHandler(types.Event{
+					Type: types.EventQuit,
+					Data: nil,
+				})
+			}
+			k.app.Stop()
+			return nil
+		}
 	case tcell.KeyCtrlC, tcell.KeyEscape:
 		if k.eventHandler != nil {
 			k.eventHandler(types.Event{
@@ -58,26 +79,55 @@ func (k *KeyboardHandler) HandleGlobalKeys(event *tcell.EventKey) *tcell.EventKe
 		case tcell.KeyUp, tcell.KeyCtrlP:
 			k.handleFileListNavigation(-1)
 			return nil
+		case tcell.KeyRune:
+			switch event.Rune() {
+			case 'j':
+				k.handleFileListNavigation(1)
+				return nil
+			case 'k':
+				k.handleFileListNavigation(-1)
+				return nil
+			case 'e':
+				if k.eventHandler != nil {
+					k.eventHandler(types.Event{
+						Type: types.EventEditFile,
+						Data: nil,
+					})
+				}
+				return nil
+			}
 		}
 	}
 	
 	return event
 }
 
-func (k *KeyboardHandler) switchFocus() {
+func (k *KeyboardHandler) switchFocus(forward bool) {
 	// Blur current component
 	if comp, exists := k.components[k.currentFocus]; exists {
 		comp.Blur()
 	}
 	
 	// Switch focus
-	switch k.currentFocus {
-	case types.FocusSearch:
-		k.currentFocus = types.FocusFileList
-	case types.FocusFileList:
-		k.currentFocus = types.FocusSearch
-	case types.FocusPreview:
-		k.currentFocus = types.FocusSearch
+	if forward {
+		switch k.currentFocus {
+		case types.FocusSearch:
+			k.currentFocus = types.FocusFileList
+		case types.FocusFileList:
+			k.currentFocus = types.FocusSearch
+		case types.FocusPreview:
+			k.currentFocus = types.FocusSearch
+		}
+	} else {
+		// Backward focus (h key / Shift+Tab)
+		switch k.currentFocus {
+		case types.FocusSearch:
+			k.currentFocus = types.FocusFileList
+		case types.FocusFileList:
+			k.currentFocus = types.FocusSearch
+		case types.FocusPreview:
+			k.currentFocus = types.FocusFileList
+		}
 	}
 	
 	// Focus new component

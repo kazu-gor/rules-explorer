@@ -49,6 +49,7 @@ const (
 	EventFocusChanged
 	EventRefresh
 	EventQuit
+	EventEditFile
 )
 
 type Event struct {

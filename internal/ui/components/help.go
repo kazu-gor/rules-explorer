@@ -44,11 +44,13 @@ func (h *HelpComponent) setupTextView() {
 		SetBackgroundColor(tcell.ColorDefault)
 	
 	helpText := `[yellow]Navigation:[-]
-[white]Tab[-]       - Switch between panes
-[white]↑/↓[-]       - Navigate files
+[white]Tab/l[-]     - Next pane
+[white]Shift+Tab/h[-] - Previous pane
+[white]↑/↓/j/k[-]   - Navigate files
 [white]Ctrl+P/N[-]  - Navigate files
 [white]Enter[-]     - Select file
-[white]Esc[-]       - Exit
+[white]e[-]         - Edit file
+[white]q/Esc[-]     - Exit
 [white]Ctrl+C[-]    - Quit
 
 [yellow]File Types:[-]
