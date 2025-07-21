@@ -166,8 +166,3 @@ go build -ldflags="-s -w" -o rules-explorer ./cmd/rules-explorer
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
-
-- Inspired by the [`pst`](https://github.com/skanehira/pst) project architecture
-- Built with the excellent [`tview`](https://github.com/rivo/tview) library
-- Designed for developers using Cursor and Claude AI tools
