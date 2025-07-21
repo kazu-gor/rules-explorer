@@ -2,6 +2,8 @@
 
 A fast, interactive terminal UI application for exploring and searching configuration files in your project. Built specifically for navigating Cursor rules, Claude configurations, and related documentation files.
 
+![Image](https://github.com/user-attachments/assets/42475bb0-1ab6-4043-952b-c494d40997a6)
+
 ## Features
 
 - 🔍 **Real-time Search**: Search across file paths and content simultaneously
