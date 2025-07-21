@@ -46,7 +46,6 @@ func (h *HelpComponent) setupTextView() {
 	helpText := `[yellow]Navigation:[-]
 [white]Tab/l[-]     - Next pane
 [white]Shift+Tab/h[-] - Previous pane
-[white]↑/↓/j/k[-]   - Navigate files
 [white]Ctrl+P/N[-]  - Navigate files
 [white]Enter[-]     - Select file
 [white]e[-]         - Edit file

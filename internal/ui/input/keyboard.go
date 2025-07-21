@@ -40,12 +40,6 @@ func (k *KeyboardHandler) HandleGlobalKeys(event *tcell.EventKey) *tcell.EventKe
 		return nil
 	case tcell.KeyRune:
 		switch event.Rune() {
-		case 'l':
-			k.switchFocus(true)
-			return nil
-		case 'h':
-			k.switchFocus(false)
-			return nil
 		case 'q':
 			if k.eventHandler != nil {
 				k.eventHandler(types.Event{
@@ -81,12 +75,6 @@ func (k *KeyboardHandler) HandleGlobalKeys(event *tcell.EventKey) *tcell.EventKe
 			return nil
 		case tcell.KeyRune:
 			switch event.Rune() {
-			case 'j':
-				k.handleFileListNavigation(1)
-				return nil
-			case 'k':
-				k.handleFileListNavigation(-1)
-				return nil
 			case 'e':
 				if k.eventHandler != nil {
 					k.eventHandler(types.Event{
@@ -119,7 +107,7 @@ func (k *KeyboardHandler) switchFocus(forward bool) {
 			k.currentFocus = types.FocusSearch
 		}
 	} else {
-		// Backward focus (h key / Shift+Tab)
+		// Backward focus (Shift+Tab)
 		switch k.currentFocus {
 		case types.FocusSearch:
 			k.currentFocus = types.FocusFileList
