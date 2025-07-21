@@ -44,6 +44,12 @@ go install ./cmd/rules-explorer
 ### Basic Usage
 
 ```bash
+$ sudo mv rules-explorer /usr/local/bin/rules-explorer
+$ chmod +x /usr/local/bin/rules-explorer
+$ rules-explorer
+```
+
+```bash
 # Run from your project directory
 ./rules-explorer
 
