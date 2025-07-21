@@ -25,8 +25,8 @@ func GetFileIcon(path string, icons types.IconSet) string {
 }
 
 func FormatPath(path string) string {
-	if len(path) > 40 {
-		return "..." + path[len(path)-37:]
+	if len(path) > 80 {
+		return "..." + path[len(path)-77:]
 	}
 	return path
 }

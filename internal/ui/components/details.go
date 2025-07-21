@@ -94,7 +94,7 @@ func (d *DetailsComponent) updateFileDetails(file types.FileItem) {
 		fileType.String(),
 		sizeStr,
 		lineCount,
-		utils.GetContentPreview(file.Content, 5, 50))
+		utils.GetContentPreview(file.Content, 10, 100))
 	
 	d.textView.SetText(details)
 }

@@ -138,7 +138,7 @@ func (f *FileListComponent) updateFiles(files []types.FileItem) {
 	for _, file := range files {
 		fileTypeEnum := theme.DetermineFileType(file.Path)
 		icon := theme.GetFileTypeIconPlain(fileTypeEnum, icons)
-		shortPath := utils.GetShortPath(file.Path, 40)
+		shortPath := utils.GetShortPath(file.Path, 80)
 		fileType := fileTypeEnum.String()
 		
 		f.list.AddItem(
