@@ -61,9 +61,13 @@ func (e *Explorer) LoadFiles() error {
 }
 
 func (e *Explorer) matchesPattern(relPath string) bool {
-	// Match .cursor/rules/*.mdc
-	if strings.HasPrefix(relPath, ".cursor/rules/") && strings.HasSuffix(relPath, ".mdc") {
-		return true
+	// Match .cursor/rules/*.mdc anywhere in the tree
+	if strings.Contains(relPath, ".cursor/rules/") && strings.HasSuffix(relPath, ".mdc") {
+		// Ensure the file is directly under .cursor/rules/, not in a subdirectory
+		parts := strings.Split(relPath, ".cursor/rules/")
+		if len(parts) == 2 && !strings.Contains(parts[1], "/") {
+			return true
+		}
 	}
 	
 	// Match CLAUDE.md anywhere
