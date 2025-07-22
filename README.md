@@ -11,7 +11,7 @@ A fast, interactive terminal UI application for exploring and searching configur
 - 👀 **Live Preview**: View file contents in a dedicated preview pane
 - ⌨️ **Keyboard Navigation**: Efficient terminal-based interface
 - 🚀 **Lightweight**: Fast startup and responsive performance
-- 🎯 **Focused Scope**: Targets specific file types for better organization
+- 🎯 **Focused Scope**: Targets specific file types for better organizatiorn
 
 ## Supported File Types
 
@@ -31,7 +31,7 @@ Rules Explorer automatically discovers and indexes:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/rules-explorer.git
+git clone https://github.com/kazu-gor/rules-explorer.git
 cd rules-explorer
 
 # Build the application
